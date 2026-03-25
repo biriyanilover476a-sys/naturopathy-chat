@@ -8,35 +8,25 @@
   :root {
     --background: 90 20% 97%;
     --foreground: 150 25% 12%;
-
     --card: 80 25% 95%;
     --card-foreground: 150 25% 12%;
-
     --popover: 90 20% 97%;
     --popover-foreground: 150 25% 12%;
-
     --primary: 152 45% 38%;
     --primary-foreground: 80 30% 97%;
-
     --secondary: 42 60% 88%;
     --secondary-foreground: 35 50% 25%;
-
     --muted: 100 15% 90%;
     --muted-foreground: 140 10% 45%;
-
     --accent: 28 70% 55%;
     --accent-foreground: 30 60% 98%;
-
     --destructive: 0 65% 52%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 120 15% 85%;
     --input: 120 15% 85%;
     --ring: 152 45% 38%;
-
     --radius: 1rem;
 
-    /* Custom tokens */
     --nature-sage: 140 20% 72%;
     --nature-moss: 152 35% 28%;
     --nature-cream: 42 40% 95%;
@@ -63,6 +53,41 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 160 15% 10%;
+    --foreground: 90 15% 90%;
+    --card: 155 12% 14%;
+    --card-foreground: 90 15% 90%;
+    --popover: 160 15% 10%;
+    --popover-foreground: 90 15% 90%;
+    --primary: 152 45% 45%;
+    --primary-foreground: 160 20% 5%;
+    --secondary: 42 30% 25%;
+    --secondary-foreground: 42 40% 85%;
+    --muted: 155 10% 20%;
+    --muted-foreground: 140 10% 55%;
+    --accent: 28 60% 50%;
+    --accent-foreground: 30 60% 98%;
+    --destructive: 0 60% 48%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 155 10% 22%;
+    --input: 155 10% 22%;
+    --ring: 152 45% 45%;
+
+    --nature-sage: 140 15% 35%;
+    --nature-moss: 152 30% 35%;
+    --nature-cream: 42 20% 18%;
+    --nature-bark: 25 20% 55%;
+    --nature-lavender: 270 20% 40%;
+    --nature-glow: 152 40% 50%;
+
+    --gradient-chat-bg: linear-gradient(180deg, hsl(160 15% 10%), hsl(155 12% 12%));
+
+    --shadow-soft: 0 2px 12px hsl(0 0% 0% / 0.3);
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.25);
+    --shadow-elevated: 0 8px 32px hsl(0 0% 0% / 0.35);
   }
 }
 
