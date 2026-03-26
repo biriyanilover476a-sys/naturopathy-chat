@@ -4,9 +4,11 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
-import HomePage from "@/pages/HomePage";
+import DashboardPage from "@/pages/DashboardPage";
 import ChatPage from "@/pages/ChatPage";
 import RemediesPage from "@/pages/RemediesPage";
+import RemindersPage from "@/pages/RemindersPage";
+import DoctorsPage from "@/pages/DoctorsPage";
 import NotFound from "@/pages/NotFound";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -20,9 +22,11 @@ const AppContent = () => {
       <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
         <Navbar theme={theme} onToggleTheme={toggleTheme} />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<DashboardPage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/remedies" element={<RemediesPage />} />
+          <Route path="/reminders" element={<RemindersPage />} />
+          <Route path="/doctors" element={<DoctorsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

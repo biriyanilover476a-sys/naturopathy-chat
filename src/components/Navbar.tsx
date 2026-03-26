@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Leaf, MessageCircle, BookOpen, Home, Moon, Sun } from "lucide-react";
+import { Leaf, MessageCircle, BookOpen, Home, Moon, Sun, Bell, MapPin } from "lucide-react";
 
 interface NavbarProps {
   theme: "light" | "dark";
@@ -10,6 +10,8 @@ const navItems = [
   { to: "/", label: "Home", icon: Home },
   { to: "/chat", label: "Chat", icon: MessageCircle },
   { to: "/remedies", label: "Remedies", icon: BookOpen },
+  { to: "/reminders", label: "Reminders", icon: Bell },
+  { to: "/doctors", label: "Doctors", icon: MapPin },
 ];
 
 const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
