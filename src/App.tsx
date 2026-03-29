@@ -11,6 +11,7 @@ import RemindersPage from "@/pages/RemindersPage";
 import DoctorsPage from "@/pages/DoctorsPage";
 import NotFound from "@/pages/NotFound";
 import { useTheme } from "@/hooks/useTheme";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 
 const queryClient = new QueryClient();
 
@@ -36,11 +37,13 @@ const AppContent = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <AppContent />
-    </TooltipProvider>
+    <LanguageProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <AppContent />
+      </TooltipProvider>
+    </LanguageProvider>
   </QueryClientProvider>
 );
 
