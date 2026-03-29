@@ -1,11 +1,11 @@
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { RotateCcw } from "lucide-react";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import { generateResponse, suggestedQuestions } from "@/data/remedies";
 import { useChatHistory } from "@/hooks/useChatHistory";
-import { useState } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const ChatPage = () => {
   const { messages, addMessage, clearHistory } = useChatHistory();
@@ -13,6 +13,7 @@ const ChatPage = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const initialQueryHandled = useRef(false);
+  const { t } = useLanguage();
 
   const scrollToBottom = useCallback(() => {
     setTimeout(() => {
@@ -53,8 +54,8 @@ const ChatPage = () => {
       {/* Chat header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-background/60 backdrop-blur-sm">
         <div>
-          <h2 className="font-display font-semibold text-foreground text-sm">Chat with AI</h2>
-          <p className="text-xs text-muted-foreground">{messages.length} messages</p>
+          <h2 className="font-display font-semibold text-foreground text-sm">{t("chat_with_ai")}</h2>
+          <p className="text-xs text-muted-foreground">{messages.length} {t("messages")}</p>
         </div>
         {messages.length > 0 && (
           <button
@@ -62,7 +63,7 @@ const ChatPage = () => {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-muted-foreground hover:bg-card hover:text-foreground transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            Clear
+            {t("clear")}
           </button>
         )}
       </div>
@@ -72,7 +73,7 @@ const ChatPage = () => {
         {messages.length === 0 && !isTyping ? (
           <div className="flex flex-col items-center justify-center h-full px-6 py-8">
             <p className="text-muted-foreground text-center text-sm mb-6">
-              Ask me about any health condition and I'll suggest natural remedies.
+              {t("ask_health_prompt")}
             </p>
             <div className="flex flex-wrap gap-2 justify-center max-w-sm">
               {suggestedQuestions.map((q) => (

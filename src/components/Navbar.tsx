@@ -1,5 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { Leaf, MessageCircle, BookOpen, Home, Moon, Sun, Bell, MapPin } from "lucide-react";
+import { Leaf, MessageCircle, BookOpen, Home, Moon, Sun, Bell, MapPin, Globe } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { languages } from "@/i18n/translations";
+import { useState, useRef, useEffect } from "react";
 
 interface NavbarProps {
   theme: "light" | "dark";
@@ -7,15 +10,28 @@ interface NavbarProps {
 }
 
 const navItems = [
-  { to: "/", label: "Home", icon: Home },
-  { to: "/chat", label: "Chat", icon: MessageCircle },
-  { to: "/remedies", label: "Remedies", icon: BookOpen },
-  { to: "/reminders", label: "Reminders", icon: Bell },
-  { to: "/doctors", label: "Doctors", icon: MapPin },
+  { to: "/", labelKey: "home" as const, icon: Home },
+  { to: "/chat", labelKey: "chat" as const, icon: MessageCircle },
+  { to: "/remedies", labelKey: "remedies" as const, icon: BookOpen },
+  { to: "/reminders", labelKey: "reminders" as const, icon: Bell },
+  { to: "/doctors", labelKey: "doctors" as const, icon: MapPin },
 ];
 
 const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
   const { pathname } = useLocation();
+  const { language, setLanguage, t } = useLanguage();
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const currentLang = languages.find((l) => l.code === language);
 
   return (
     <>
@@ -26,8 +42,8 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
             <Leaf className="w-4.5 h-4.5 text-primary-foreground" />
           </div>
           <div className="flex flex-col">
-            <span className="font-display font-bold text-foreground text-sm leading-tight">Naturopathy AI</span>
-            <span className="text-[10px] text-muted-foreground leading-tight tracking-wider">आयुर्वेद</span>
+            <span className="font-display font-bold text-foreground text-sm leading-tight">{t("naturopathy_ai")}</span>
+            <span className="text-[10px] text-muted-foreground leading-tight tracking-wider">{t("ayurveda")}</span>
           </div>
         </Link>
         <div className="flex items-center gap-1">
@@ -42,12 +58,41 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
               }`}
             >
               <item.icon className="w-4 h-4" />
-              {item.label}
+              {t(item.labelKey)}
             </Link>
           ))}
+
+          {/* Language Switcher */}
+          <div ref={langRef} className="relative ml-1">
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              aria-label="Change language"
+            >
+              <Globe className="w-4 h-4" />
+              <span className="text-xs font-medium">{currentLang?.nativeLabel}</span>
+            </button>
+            {langOpen && (
+              <div className="absolute right-0 top-full mt-1 w-44 bg-card border border-border rounded-xl shadow-elevated py-1 z-50 animate-fade-up">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => { setLanguage(lang.code); setLangOpen(false); }}
+                    className={`w-full flex items-center justify-between px-4 py-2 text-sm transition-colors hover:bg-muted ${
+                      language === lang.code ? "text-primary font-semibold" : "text-foreground"
+                    }`}
+                  >
+                    <span>{lang.nativeLabel}</span>
+                    <span className="text-xs text-muted-foreground">{lang.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           <button
             onClick={onToggleTheme}
-            className="ml-2 w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            className="ml-1 w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             aria-label="Toggle theme"
           >
             {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
@@ -61,23 +106,52 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
           <Link
             key={item.to}
             to={item.to}
-            className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-xs transition-all duration-200 ${
+            className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-xl text-xs transition-all duration-200 ${
               pathname === item.to
                 ? "text-primary font-semibold"
                 : "text-muted-foreground"
             }`}
           >
             <item.icon className="w-5 h-5" />
-            {item.label}
+            <span className="truncate max-w-[3.5rem] text-center">{t(item.labelKey)}</span>
           </Link>
         ))}
+
+        {/* Mobile language button */}
+        <div ref={langRef} className="relative">
+          <button
+            onClick={() => setLangOpen(!langOpen)}
+            className="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-xl text-xs text-muted-foreground"
+            aria-label="Change language"
+          >
+            <Globe className="w-5 h-5" />
+            <span className="truncate max-w-[3.5rem]">{currentLang?.nativeLabel}</span>
+          </button>
+          {langOpen && (
+            <div className="absolute bottom-full right-0 mb-2 w-44 bg-card border border-border rounded-xl shadow-elevated py-1 z-50 animate-fade-up">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => { setLanguage(lang.code); setLangOpen(false); }}
+                  className={`w-full flex items-center justify-between px-4 py-2 text-sm transition-colors hover:bg-muted ${
+                    language === lang.code ? "text-primary font-semibold" : "text-foreground"
+                  }`}
+                >
+                  <span>{lang.nativeLabel}</span>
+                  <span className="text-xs text-muted-foreground">{lang.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
         <button
           onClick={onToggleTheme}
-          className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-xs text-muted-foreground"
+          className="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-xl text-xs text-muted-foreground"
           aria-label="Toggle theme"
         >
           {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-          Theme
+          {t("theme")}
         </button>
       </nav>
     </>

@@ -2,11 +2,13 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Search, MessageCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { remediesDatabase, categories, type Remedy } from "@/data/remedies";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const RemediesPage = () => {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const { t } = useLanguage();
 
   const filtered = useMemo(() => {
     let results = remediesDatabase;
@@ -25,15 +27,15 @@ const RemediesPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 pb-24 md:pb-8">
-      <h1 className="font-display text-2xl font-bold text-foreground mb-1">Remedies Library</h1>
-      <p className="text-sm text-muted-foreground mb-6">{remediesDatabase.length} conditions covered</p>
+      <h1 className="font-display text-2xl font-bold text-foreground mb-1">{t("remedies_library")}</h1>
+      <p className="text-sm text-muted-foreground mb-6">{remediesDatabase.length} {t("conditions_covered")}</p>
 
       {/* Search */}
       <div className="relative mb-4">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <input
           type="text"
-          placeholder="Search conditions, symptoms..."
+          placeholder={t("search_conditions")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full bg-card border border-border rounded-full pl-11 pr-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all shadow-soft"
@@ -48,7 +50,7 @@ const RemediesPage = () => {
             !selectedCategory ? "bg-primary text-primary-foreground" : "bg-card border border-border text-foreground hover:bg-muted"
           }`}
         >
-          All
+          {t("all")}
         </button>
         {categories.map((cat) => (
           <button
@@ -65,7 +67,7 @@ const RemediesPage = () => {
 
       {/* Results */}
       {filtered.length === 0 ? (
-        <p className="text-center text-muted-foreground py-12">No conditions found. Try a different search term.</p>
+        <p className="text-center text-muted-foreground py-12">{t("no_conditions_found")}</p>
       ) : (
         <div className="space-y-3">
           {filtered.map((remedy) => (
@@ -83,6 +85,7 @@ const RemediesPage = () => {
 };
 
 function RemedyCard({ remedy, expanded, onToggle }: { remedy: Remedy; expanded: boolean; onToggle: () => void }) {
+  const { t } = useLanguage();
   return (
     <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden transition-all">
       <button
@@ -101,11 +104,11 @@ function RemedyCard({ remedy, expanded, onToggle }: { remedy: Remedy; expanded: 
 
       {expanded && (
         <div className="px-4 pb-4 space-y-4 animate-fade-up">
-          <Section title="Symptoms" items={remedy.symptoms} />
-          <Section title="Common Causes" items={remedy.causes} />
-          <Section title="Natural Remedies" items={remedy.remedies} html />
-          <Section title="Diet Suggestions" items={remedy.diet} />
-          <Section title="Lifestyle Tips" items={remedy.lifestyle} />
+          <Section title={t("symptoms")} items={remedy.symptoms} />
+          <Section title={t("common_causes")} items={remedy.causes} />
+          <Section title={t("natural_remedies")} items={remedy.remedies} html />
+          <Section title={t("diet_suggestions")} items={remedy.diet} />
+          <Section title={t("lifestyle_tips")} items={remedy.lifestyle} />
           {remedy.caution && (
             <p className="text-xs text-destructive bg-destructive/10 rounded-lg p-3">
               ⚠️ {remedy.caution}
@@ -116,7 +119,7 @@ function RemedyCard({ remedy, expanded, onToggle }: { remedy: Remedy; expanded: 
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-medium hover:shadow-elevated transition-all active:scale-95"
           >
             <MessageCircle className="w-3.5 h-3.5" />
-            Ask AI about this
+            {t("ask_ai_about")}
           </Link>
         </div>
       )}
