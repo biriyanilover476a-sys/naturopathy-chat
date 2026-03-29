@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Plus, Trash2, Bell, BellOff, Clock, X } from "lucide-react";
 import { useReminders } from "@/hooks/useReminders";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const RemindersPage = () => {
   const { reminders, addReminder, removeReminder, toggleReminder } = useReminders();
+  const { t } = useLanguage();
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [dosage, setDosage] = useState("");
@@ -29,15 +31,15 @@ const RemindersPage = () => {
     <div className="max-w-2xl mx-auto px-4 py-6 pb-24 md:pb-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-display text-2xl font-bold text-foreground">Medicine Reminders</h1>
-          <p className="text-sm text-muted-foreground">{reminders.length} reminder{reminders.length !== 1 ? "s" : ""}</p>
+          <h1 className="font-display text-2xl font-bold text-foreground">{t("medicine_reminders")}</h1>
+          <p className="text-sm text-muted-foreground">{reminders.length} {t("reminder_count")}{reminders.length !== 1 ? "s" : ""}</p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
           className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-soft hover:shadow-elevated transition-all active:scale-95"
         >
           {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-          {showForm ? "Cancel" : "Add"}
+          {showForm ? t("cancel") : t("add")}
         </button>
       </div>
 
@@ -45,7 +47,7 @@ const RemindersPage = () => {
       {showForm && (
         <form onSubmit={handleSubmit} className="mb-6 p-4 rounded-2xl bg-card border border-border shadow-card space-y-4 animate-fade-up">
           <div>
-            <label className="block text-xs font-medium text-foreground mb-1">Medicine Name *</label>
+            <label className="block text-xs font-medium text-foreground mb-1">{t("medicine_name")} *</label>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -55,7 +57,7 @@ const RemindersPage = () => {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-foreground mb-1">Dosage *</label>
+            <label className="block text-xs font-medium text-foreground mb-1">{t("dosage")} *</label>
             <input
               value={dosage}
               onChange={(e) => setDosage(e.target.value)}
@@ -65,7 +67,7 @@ const RemindersPage = () => {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-foreground mb-1">Reminder Times</label>
+            <label className="block text-xs font-medium text-foreground mb-1">{t("reminder_times")}</label>
             <div className="space-y-2">
               {times.map((t, i) => (
                 <div key={i} className="flex items-center gap-2">
@@ -84,11 +86,11 @@ const RemindersPage = () => {
               ))}
             </div>
             <button type="button" onClick={addTimeSlot} className="mt-2 text-xs text-primary font-medium hover:underline">
-              + Add another time
+              {t("add_another_time")}
             </button>
           </div>
           <div>
-            <label className="block text-xs font-medium text-foreground mb-1">Notes (optional)</label>
+            <label className="block text-xs font-medium text-foreground mb-1">{t("notes_optional")}</label>
             <input
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -100,7 +102,7 @@ const RemindersPage = () => {
             type="submit"
             className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground font-medium text-sm shadow-soft hover:shadow-elevated transition-all active:scale-95"
           >
-            Save Reminder
+            {t("save_reminder")}
           </button>
         </form>
       )}
@@ -109,8 +111,8 @@ const RemindersPage = () => {
       {reminders.length === 0 && !showForm ? (
         <div className="text-center py-16">
           <Bell className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-30" />
-          <p className="text-muted-foreground text-sm">No reminders yet</p>
-          <p className="text-xs text-muted-foreground mt-1">Add your first medicine reminder above</p>
+          <p className="text-muted-foreground text-sm">{t("no_reminders_yet")}</p>
+          <p className="text-xs text-muted-foreground mt-1">{t("add_first_reminder")}</p>
         </div>
       ) : (
         <div className="space-y-3">
