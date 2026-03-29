@@ -12,8 +12,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Fraunces", "serif"],
-        body: ["DM Sans", "sans-serif"],
+        display: ["Playfair Display", "serif"],
+        body: ["Poppins", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -49,6 +49,20 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        saffron: {
+          DEFAULT: "hsl(var(--saffron))",
+          light: "hsl(var(--saffron-light))",
+        },
+        turmeric: "hsl(var(--turmeric))",
+        henna: "hsl(var(--henna))",
+        terracotta: "hsl(var(--terracotta))",
+        clay: "hsl(var(--clay))",
+        sandalwood: "hsl(var(--sandalwood))",
+        neem: "hsl(var(--neem))",
+        tulsi: "hsl(var(--tulsi))",
+        lotus: "hsl(var(--lotus))",
+        cream: "hsl(var(--cream))",
+        earth: "hsl(var(--earth))",
         nature: {
           sage: "hsl(var(--nature-sage))",
           moss: "hsl(var(--nature-moss))",
@@ -77,16 +91,21 @@ export default {
         soft: "var(--shadow-soft)",
         card: "var(--shadow-card)",
         elevated: "var(--shadow-elevated)",
+        saffron: "var(--shadow-saffron)",
       },
       keyframes: {
         "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
         "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } },
         "fade-up": { from: { opacity: "0", transform: "translateY(12px)" }, to: { opacity: "1", transform: "translateY(0)" } },
+        "float": { "0%, 100%": { transform: "translateY(0) rotate(0deg)" }, "50%": { transform: "translateY(-8px) rotate(2deg)" } },
+        "spin-slow": { from: { transform: "rotate(0deg)" }, to: { transform: "rotate(360deg)" } },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.4s ease-out forwards",
+        "float": "float 4s ease-in-out infinite",
+        "spin-slow": "spin-slow 20s linear infinite",
       },
     },
   },

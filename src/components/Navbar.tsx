@@ -21,20 +21,23 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
     <>
       {/* Top navbar (md+) */}
       <nav className="hidden md:flex items-center justify-between px-6 py-3 border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-            <Leaf className="w-4 h-4 text-primary-foreground" />
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center shadow-saffron">
+            <Leaf className="w-4.5 h-4.5 text-primary-foreground" />
           </div>
-          <span className="font-display font-semibold text-foreground">Naturopathy AI</span>
+          <div className="flex flex-col">
+            <span className="font-display font-bold text-foreground text-sm leading-tight">Naturopathy AI</span>
+            <span className="text-[10px] text-muted-foreground leading-tight tracking-wider">आयुर्वेद</span>
+          </div>
         </Link>
         <div className="flex items-center gap-1">
           {navItems.map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 pathname === item.to
-                  ? "bg-primary text-primary-foreground"
+                  ? "bg-primary text-primary-foreground shadow-soft"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted"
               }`}
             >
@@ -58,7 +61,7 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
           <Link
             key={item.to}
             to={item.to}
-            className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-xs transition-colors ${
+            className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-xs transition-all duration-200 ${
               pathname === item.to
                 ? "text-primary font-semibold"
                 : "text-muted-foreground"

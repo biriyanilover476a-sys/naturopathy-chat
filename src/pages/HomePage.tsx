@@ -1,43 +1,55 @@
 import { Link } from "react-router-dom";
 import { MessageCircle, BookOpen, Leaf, Sparkles, Heart, Shield } from "lucide-react";
-import heroBotanical from "@/assets/hero-botanical.png";
 import { suggestedQuestions } from "@/data/remedies";
+import MandalaDecor from "@/components/MandalaDecor";
 
 const features = [
-  { icon: Sparkles, title: "AI-Powered", desc: "Smart symptom matching with 50+ conditions" },
-  { icon: Heart, title: "Holistic Care", desc: "Remedies, diet, and lifestyle guidance" },
-  { icon: Shield, title: "Works Offline", desc: "Full knowledge base available anytime" },
+  { icon: Sparkles, title: "AI-Powered", desc: "Smart symptom matching with 50+ Ayurvedic conditions", emoji: "✨" },
+  { icon: Heart, title: "Holistic Care", desc: "Herbal remedies, diet plans & Yoga guidance", emoji: "🙏" },
+  { icon: Shield, title: "Works Offline", desc: "Full Ayurvedic knowledge base available anytime", emoji: "🌿" },
 ];
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Decorative mandalas */}
+      <div className="absolute top-8 left-4 text-saffron pointer-events-none">
+        <MandalaDecor size={180} className="animate-spin-slow" />
+      </div>
+      <div className="absolute top-40 right-0 text-primary pointer-events-none">
+        <MandalaDecor size={240} className="animate-spin-slow" />
+      </div>
+      <div className="absolute bottom-20 left-8 text-turmeric pointer-events-none">
+        <MandalaDecor size={100} />
+      </div>
+
       {/* Hero */}
-      <section className="flex flex-col items-center text-center px-6 pt-12 pb-8">
-        <img
-          src={heroBotanical}
-          alt="Botanical herbs mandala"
-          width={160}
-          height={160}
-          className="mb-6 opacity-90 animate-fade-up"
-        />
-        <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-3 animate-fade-up">
-          Naturopathy AI Assistant
-        </h1>
-        <p className="text-muted-foreground max-w-md mb-8 animate-fade-up">
-          Your natural wellness companion. Get personalized herbal remedies, diet suggestions, and holistic health guidance — all powered by AI.
-        </p>
+      <section className="flex flex-col items-center text-center px-6 pt-16 pb-8 relative z-10">
+        <div className="w-24 h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-6 animate-fade-up animate-float">
+          <span className="text-5xl">🌿</span>
+        </div>
+        <div className="animate-fade-up">
+          <p className="text-sm text-accent font-medium tracking-widest uppercase mb-2">आयुर्वेद · Ayurveda</p>
+          <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-3 leading-tight">
+            Naturopathy AI<br />
+            <span className="text-primary">Assistant</span>
+          </h1>
+          <p className="text-muted-foreground max-w-md mx-auto mb-8 text-sm md:text-base leading-relaxed">
+            Your natural wellness companion rooted in ancient Indian Ayurvedic wisdom.
+            Get personalized herbal remedies, diet suggestions & holistic health guidance.
+          </p>
+        </div>
         <div className="flex flex-wrap gap-3 justify-center animate-fade-up">
           <Link
             to="/chat"
-            className="flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium shadow-soft hover:shadow-elevated transition-all active:scale-95"
+            className="flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground font-medium shadow-soft hover:shadow-elevated transition-all active:scale-95"
           >
             <MessageCircle className="w-4 h-4" />
-            Start Chat
+            Start Consultation
           </Link>
           <Link
             to="/remedies"
-            className="flex items-center gap-2 px-6 py-3 rounded-full bg-card border border-border text-foreground font-medium shadow-soft hover:bg-muted transition-all active:scale-95"
+            className="flex items-center gap-2 px-7 py-3.5 rounded-full bg-card border border-border text-foreground font-medium shadow-soft hover:bg-muted transition-all active:scale-95"
           >
             <BookOpen className="w-4 h-4" />
             Browse Remedies
@@ -46,22 +58,22 @@ const HomePage = () => {
       </section>
 
       {/* Features */}
-      <section className="px-6 py-10">
+      <section className="px-6 py-10 relative z-10">
         <div className="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
           {features.map((f) => (
-            <div key={f.title} className="flex flex-col items-center text-center p-5 rounded-2xl bg-card border border-border shadow-card">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
-                <f.icon className="w-5 h-5 text-primary" />
+            <div key={f.title} className="flex flex-col items-center text-center p-5 rounded-2xl bg-card border border-border shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-200">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                <span className="text-2xl">{f.emoji}</span>
               </div>
               <h3 className="font-display font-semibold text-foreground mb-1">{f.title}</h3>
-              <p className="text-xs text-muted-foreground">{f.desc}</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Quick Ask */}
-      <section className="px-6 pb-28 md:pb-12">
+      <section className="px-6 pb-28 md:pb-12 relative z-10">
         <div className="max-w-lg mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Leaf className="w-4 h-4 text-primary" />
