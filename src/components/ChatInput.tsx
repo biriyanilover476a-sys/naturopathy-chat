@@ -1,5 +1,6 @@
 import { SendHorizontal } from "lucide-react";
 import { useState, useRef } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -9,6 +10,7 @@ interface ChatInputProps {
 const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const { t } = useLanguage();
 
   const handleSubmit = () => {
     const trimmed = value.trim();
@@ -26,7 +28,7 @@ const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-        placeholder="Describe your symptoms..."
+        placeholder={t("describe_symptoms")}
         disabled={disabled}
         className="flex-1 bg-card border border-border rounded-full px-5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all shadow-soft"
       />
